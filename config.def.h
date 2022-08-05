@@ -58,6 +58,12 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 
+#include <X11/XF86keysym.h>
+
+/* audio commands */
+#define volup "amixer sset 'Master' 5%+ && pkill -RTMIN+10 dwmblocks"
+#define voldown "amixer sset 'Master' 5%- && pkill -RTMIN+10 dwmblocks"
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -71,7 +77,19 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
+
+  /* Launch */
+	{ MODKEY|ShiftMask,    	        XK_t,      spawn,     	   SHCMD("~/scripts/theme-switcher.sh") },
+	{ MODKEY,             	        XK_a,      spawn,     	   SHCMD("~/scripts/print.sh") },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,     	   SHCMD("~/scripts/emacs.sh") },
+	{ MODKEY|Mod1Mask,              XK_q,      spawn,     	   SHCMD("~/scripts/power-prompt.sh") },
+	{ MODKEY|ShiftMask,             XK_w,      spawn,     	   SHCMD("$BROWSER") },
+	{ MODKEY|ShiftMask,             XK_z,      spawn,     	   SHCMD("zathura") } ,
+	/* Volume */
+	{ MODKEY|ShiftMask,             XK_equal,  spawn,     	   SHCMD(volup) },
+	{ MODKEY|ShiftMask,             XK_minus,  spawn,          SHCMD(voldown) },
+	/* Layout */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -79,10 +97,17 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+	/* Monitors */
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+  /* Laptop media keys */
+  { 0,  XF86XK_MonBrightnessUp,               spawn,		SHCMD("light -A 10") },
+  { 0,  XF86XK_MonBrightnessDown,             spawn,	  SHCMD("light -U 10") },
+  { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
+  { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
+	/* Tagkeys */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -92,7 +117,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  /* Restarting */
+	{ MODKEY|ShiftMask,		          XK_q,      quit,           {1} },
+	{ MODKEY|ShiftMask|Mod1Mask,   	XK_q,      quit,           {0} },
 };
 
 /* button definitions */
