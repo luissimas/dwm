@@ -1,14 +1,14 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
+#include "/home/padawan/.cache/wal/colors-wal-dwm.h"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 5;       /* snap pixel */
+static const unsigned int snap      = 5;        /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 static const char *fonts[]          = { "Iosevka Padawan:size=9", "Iosevka Nerd Font:size=9" };
-
-#include "/home/padawan/.cache/wal/colors-wal-dwm.h"
 
 static const char *colors[][3]      = {
 	//               fg         bg         border
@@ -43,7 +43,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -57,8 +57,6 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-
-#include <X11/XF86keysym.h>
 
 /* audio commands */
 #define volup "amixer sset 'Master' 5%+ && pkill -RTMIN+10 dwmblocks"
@@ -78,7 +76,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-
   /* Launch */
 	{ MODKEY|ShiftMask,    	        XK_t,      spawn,     	   SHCMD("~/scripts/theme-switcher.sh") },
 	{ MODKEY,             	        XK_a,      spawn,     	   SHCMD("~/scripts/print.sh") },
@@ -95,6 +92,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+ 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	/* Monitors */
@@ -107,7 +105,11 @@ static Key keys[] = {
   { 0,  XF86XK_MonBrightnessDown,             spawn,	  SHCMD("light -U 10") },
   { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
   { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
-	/* Tagkeys */
+	/* Tags */
+	{ MODKEY,                       XK_o,   viewnext,       {0} },
+	{ MODKEY,                       XK_i,   viewprev,       {0} },
+	{ MODKEY|ShiftMask,             XK_o,   tagtonext,      {0} },
+	{ MODKEY|ShiftMask,             XK_i,   tagtoprev,      {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
