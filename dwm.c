@@ -416,8 +416,14 @@ arrangemon(Monitor *m)
 void
 attach(Client *c)
 {
-	c->next = c->mon->clients;
-	c->mon->clients = c;
+	/* If there is nothing on the monitor or the selected client is floating or attachbellow is 0, attach as normal */
+  if (!attachbelow || (c->mon->sel == NULL || c->mon->sel == c || c->mon->sel->isfloating)){
+    c->next = c->mon->clients;
+    c->mon->clients = c;
+  } else {
+    c->next = c->mon->sel->next;
+    c->mon->sel->next = c;
+  }
 }
 
 void
