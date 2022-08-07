@@ -79,7 +79,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_q,      killclient,     {0} },
   /* Launch */
 	{ MODKEY|ShiftMask,    	        XK_t,      spawn,     	   SHCMD("~/scripts/theme-switcher.sh") },
-	{ MODKEY,             	        XK_a,      spawn,     	   SHCMD("~/scripts/print.sh") },
+	{ MODKEY,             	        XK_a,      spawn,     	   SHCMD("maim -su | xclip -selection clipboard -t image/png") },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,     	   SHCMD("~/scripts/emacs.sh") },
 	{ MODKEY|Mod1Mask,              XK_q,      spawn,     	   SHCMD("~/scripts/power-prompt.sh") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,     	   SHCMD("$BROWSER") },
