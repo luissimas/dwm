@@ -62,8 +62,9 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 
 /* audio commands */
-#define volup "amixer sset 'Master' 5%+ && pkill -RTMIN+10 dwmblocks"
-#define voldown "amixer sset 'Master' 5%- && pkill -RTMIN+10 dwmblocks"
+#define volup "pamixer --allow-boost -i 5 && pkill -RTMIN+10 dwmblocks"
+#define voldown "pamixer --allow-boost -d 5 && pkill -RTMIN+10 dwmblocks"
+#define volmute "pamixer -t && pkill -RTMIN+10 dwmblocks"
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -89,6 +90,7 @@ static Key keys[] = {
 	/* Volume */
 	{ MODKEY|ShiftMask,             XK_equal,  spawn,     	   SHCMD(volup) },
 	{ MODKEY|ShiftMask,             XK_minus,  spawn,          SHCMD(voldown) },
+	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD(volmute) },
 	/* Layout */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
@@ -110,6 +112,7 @@ static Key keys[] = {
   { 0,  XF86XK_MonBrightnessDown,             spawn,	  SHCMD("light -U 10") },
   { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
   { 0,  XF86XK_AudioRaiseVolume,              spawn,	  SHCMD(volup) },
+  { 0,  XF86XK_AudioMute,                     spawn,	  SHCMD(volmute) },
 	/* Tags */
 	{ MODKEY,                       XK_o,   viewnext,       {0} },
 	{ MODKEY,                       XK_i,   viewprev,       {0} },
