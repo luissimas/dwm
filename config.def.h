@@ -85,7 +85,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,    	        XK_t,      spawn,     	   SHCMD("~/scripts/theme-switcher.sh") },
 	{ MODKEY,             	        XK_a,      spawn,     	   SHCMD("maim -su | xclip -selection clipboard -t image/png") },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,     	   SHCMD("~/scripts/emacs.sh") },
-	{ MODKEY|Mod1Mask,              XK_q,      spawn,     	   SHCMD("~/scripts/power-prompt.sh") },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,     	   SHCMD("~/scripts/power-prompt.sh") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,     	   SHCMD("$BROWSER") },
 	{ MODKEY|ShiftMask,             XK_z,      spawn,     	   SHCMD("zathura") } ,
 	/* Volume */
@@ -129,7 +129,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
   /* Restarting */
-	{ MODKEY|ShiftMask,		          XK_q,      quit,           {1} },
+	{ MODKEY|Mod1Mask,		          XK_q,      quit,           {1} },
 	{ MODKEY|ShiftMask|Mod1Mask,   	XK_q,      quit,           {0} },
 };
 
